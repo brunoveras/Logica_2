@@ -1,4 +1,4 @@
-# Logica_2
+# Logica 2
 Curso avançado de Lógica de Programação em JS e Html
 
 <div style="display: inline_block"><br>
