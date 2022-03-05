@@ -1,0 +1,73 @@
+<meta charset="utf-8">
+
+<canvas width="600" height="400"></canvas>
+
+<script>
+
+    var tela = document.querySelector('canvas');
+    var pincel = tela.getContext('2d');
+
+    pincel.fillStyle = 'white';
+    pincel.fillRect(0, 0, 600, 400);
+
+    var raio = 10;
+    var xAleatorio;
+    var yAleatorio;
+
+    function desenhaCirculo(x, y, raio, cor) {
+
+        pincel.fillStyle = cor;
+        pincel.beginPath();
+        pincel.arc(x, y, raio, 0, 2 * Math.PI); // ao invés de multiplicar por 3,14 usa-se Math.PI (dá no mesmo)
+        pincel.fill();
+
+    }
+
+    function limpaTela() {
+
+        pincel.clearRect(0, 0, 600, 400); //Limpará a o retângulo
+
+    }
+
+    function desenhaAlvo(x,y) { //função que desenha o alvo; círculo do maior para o menor
+
+        desenhaCirculo(x, y, raio+20, 'red');
+        desenhaCirculo(x, y, raio+10, 'white');
+        desenhaCirculo(x, y, raio, 'red');
+
+    }
+
+    function sorteiaPosicao(maximo) {
+
+        return Math.floor(Math.random() * maximo); // modo aleatório da posição
+
+    }
+
+function atualizaTela() {
+    limpaTela();
+    xAleatorio = sorteiaPosicao(600);
+    yAleatorio = sorteiaPosicao(400);
+    desenhaAlvo(xAleatorio, yAleatorio);
+}
+
+setInterval(atualizaTela, 1000); // chama a função para atualizar a tela em 1000 milisegundos, ou seja, 1 segundo.
+
+function dispara(evento) {
+
+    var x = evento.pageX - tela.offsetLeft;
+    var y = evento.pageY - tela.offsetTop;
+
+    if((x > xAleatorio - raio)
+    && (x < xAleatorio + raio)
+    && (y > yAleatorio - raio)
+    && (y < yAleatorio + raio)) {
+
+        alert('Acertou miserávi!'); //função que captura o clique do mouse
+
+    }
+
+}
+
+tela.onclick = dispara;
+
+</script>
